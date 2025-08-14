@@ -44,7 +44,6 @@ exports.getFavouriteList = (req, res, next) => {
 };
 
 exports.postAddToFavouriteList = (req, res, next) => {
-  console.log("Came to add favs", req.body);
   Favourite.addToFavourite(req.body.id, (error) => {
     if (error) {
       console.log("Error while adding favs:", error);
@@ -52,6 +51,16 @@ exports.postAddToFavouriteList = (req, res, next) => {
     res.redirect("/favourites");
   });
 };
+
+exports.postRemoveFromFavourite = (req, res, next) => {
+  const homeId = req.params.homeId;
+  Favourite.deleteById(homeId, error => {
+    if (error) {
+      console.log('Error while removing from Favourite', error);
+    }
+    res.redirect("/favourites");
+  })
+}
 
 exports.getHomeDetails = (req, res, next) => {
   const homeId = req.params.homeId;
